@@ -61,8 +61,43 @@ const server = http.createServer((req, res) => {
     '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge">    <title>Document</title></head><body>'
   );
 
+  let table = "";
+
+  table += `
+    <table>
+      <thead>
+          <tr>
+            <th>Titre</th>
+            <th>Langue</th>
+            <th>Pays</th>
+            <th>Auteur</th>
+            <th>Date</th>
+          </tr>
+      </thead>
+      <tbody>
+    `;
+  
+  for (let i = 0; i < books.length; i++) {
+    console.log("Titre: " + books[i].title);
+    console.log("Langage: " + books[i].language);
+    table += `
+      <tr>
+        <td>${books[i].title}</td>
+        <td>${books[i].language}</td>
+        <td>${books[i].country}</td>
+        <td>${books[i].author}</td>
+        <td>${books[i].date}</td>
+      </tr>
+    `;
+  }
+
+  table += `
+        </tbody>
+    </table>
+  `;
+
   // Corps de la page
-  res.write("<p>REMPLIR ICI</p>");
+  res.write(table);
 
   // On écrit le pied de page de notre page html
   res.write("</body></html>");
