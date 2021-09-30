@@ -9,6 +9,15 @@ const dayjs = require("dayjs");
 const relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
+// Plugin dayjs pour la gestion du format local des dates
+const localizedFormat = require('dayjs/plugin/localizedFormat');
+dayjs.extend(localizedFormat);
+
+// Traduction en français
+require('dayjs/locale/fr');
+// Définition de la locale par défaut
+dayjs.locale('fr');
+
 // Séléction de livres incontournables
 const books = [
   {
@@ -92,7 +101,7 @@ const server = http.createServer((req, res) => {
         <td>${books[i].country}</td>
         <td>${books[i].author}</td>
         <!-- Formatage de la date avec dayjs-->
-        <td>${dayjs(books[i].date).format("dddd, MMMM D[th] YYYY")}</td>
+        <td>${dayjs(books[i].date).format("LL")}</td>
         <!-- Age du livre -->
         <td>${dayjs(books[i].date).fromNow()}</td>
       </tr>
