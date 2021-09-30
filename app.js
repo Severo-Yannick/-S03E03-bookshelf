@@ -5,6 +5,9 @@ const http = require("http");
 
 // Formater la date de parution
 const dayjs = require("dayjs");
+// Plugin dayjs pour la gestion des intervalles de dates
+const relativeTime = require('dayjs/plugin/relativeTime');
+dayjs.extend(relativeTime);
 
 // Séléction de livres incontournables
 const books = [
@@ -61,7 +64,7 @@ const server = http.createServer((req, res) => {
 
   // On écrit l'entête de notre page html
   res.write(
-    '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge">    <title>BookShelf</title></head><body>'
+    '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge">    <title>BookShelf</title></head><body style="background-color: grey;">'
   );
 
   let table = "";
@@ -69,12 +72,13 @@ const server = http.createServer((req, res) => {
   table += `
     <table>
       <thead>
-          <tr>
+          <tr style="text-align: center;">
             <th>Titre</th>
             <th>Langue</th>
             <th>Pays</th>
             <th>Auteur</th>
             <th>Date</th>
+            <th>Age du livre</th>
           </tr>
       </thead>
       <tbody>
@@ -89,6 +93,8 @@ const server = http.createServer((req, res) => {
         <td>${books[i].author}</td>
         <!-- Formatage de la date avec dayjs-->
         <td>${dayjs(books[i].date).format("dddd, MMMM D[th] YYYY")}</td>
+        <!-- Age du livre -->
+        <td>${dayjs(books[i].date).fromNow()}</td>
       </tr>
     `;
   }
