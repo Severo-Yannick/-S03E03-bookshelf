@@ -3,6 +3,9 @@
 // afin de créer notre serveur
 const http = require("http");
 
+// Formater la date de parution
+const dayjs = require("dayjs");
+
 // Séléction de livres incontournables
 const books = [
   {
@@ -58,7 +61,7 @@ const server = http.createServer((req, res) => {
 
   // On écrit l'entête de notre page html
   res.write(
-    '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge">    <title>Document</title></head><body>'
+    '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge">    <title>BookShelf</title></head><body>'
   );
 
   let table = "";
@@ -76,23 +79,22 @@ const server = http.createServer((req, res) => {
       </thead>
       <tbody>
     `;
-  
+
   for (let i = 0; i < books.length; i++) {
-    console.log("Titre: " + books[i].title);
-    console.log("Langage: " + books[i].language);
     table += `
       <tr>
         <td>${books[i].title}</td>
         <td>${books[i].language}</td>
         <td>${books[i].country}</td>
         <td>${books[i].author}</td>
-        <td>${books[i].date}</td>
+        <!-- Formatage de la date avec dayjs-->
+        <td>${dayjs(books[i].date).format("dddd, MMMM D[th] YYYY")}</td>
       </tr>
     `;
   }
 
   table += `
-        </tbody>
+      </tbody>
     </table>
   `;
 
